@@ -1,6 +1,12 @@
 <?php
 
 $pesquisar = $_REQUEST['pesquisar'] ?? '';
-$livros = (new DB)->livros($pesquisar);
+
+$db = new DB;
+$livros = $db->query(
+        query:'select * from livros where title like :filtro',
+        class: Livro::class,
+        params: ['filtro' => "%$pesquisar%"]
+)->fetchAll();
 
 view('index', compact('livros'));
