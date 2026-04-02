@@ -1,10 +1,7 @@
 <?php
 
 $id = $_REQUEST['id'];
-
-$db = new DB;
-
-$livro = $db->query(
+$livro = $database->query(
     query: 'select * from livros where id = :id',
     class: Livro::class,
     params: [':id' => $id]
