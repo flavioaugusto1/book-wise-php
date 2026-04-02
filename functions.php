@@ -9,12 +9,17 @@ function view($view, $data = [])
     require './views/template/app.php';
 }
 
-function dd($dump)
+function dd(...$dump)
+{
+    dump($dump);
+    exit();
+}
+
+function dump(...$dump)
 {
     echo '<pre>';
     var_dump($dump);
     echo '</pre>';
-    die();
 }
 
 function abort($code)
