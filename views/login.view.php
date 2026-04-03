@@ -27,9 +27,20 @@
     <div class="border border-stone-700 rounded p4">
         <h1 class="border-b border-stone-700 text-stone-400 font-bold px-4 py-2">Registrar</h1>
         <form class="p-4 space-y-4" method="POST" action="/registrar">
-            <?php if(strlen($mensagem) > 0): ?>
-                <div class="border-green-800 bg-green-900 text-green-400 p-2 rounded border-2">
+            <?php if (isset($mensagem) && strlen($mensagem)): ?>
+                <div class="border-green-800 bg-green-900 text-green-400 p-2 rounded border-2 text-sm font-bold">
                     <?= $mensagem ?>
+                </div>
+            <? endif; ?>
+
+            <?php if (isset($_SESSION['validacoes']) && sizeof($_SESSION['validacoes'])): ?>
+                <div class="border-red-800 bg-red-900 text-red-400 p-2 rounded border-2 text-sm font-bold">
+                    <ul>
+                        <li>Erro no registro</li>
+                        <?php foreach ($_SESSION['validacoes'] as $validacao): ?>
+                            <li><?= $validacao ?></li>
+                        <? endforeach; ?>
+                    </ul>
                 </div>
             <? endif; ?>
 
@@ -55,7 +66,7 @@
                     type="email"
                     class="border-stone-800 border-2 rounded-md bg-stone-900 text-sm focus:outline-none px-2 py-1 w-full"
                     placeholder="E-mail"
-                    name="email-confirmacao"
+                    name="email_confirmacao"
                     required />
 
                 <Label class="text-stone-400">Senha</Label>
