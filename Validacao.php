@@ -4,6 +4,8 @@ class Validacao
 {
     public $validacoes = [];
 
+
+
     public static function validar($regras, $dados)
     {
         $validacao = new self;
@@ -62,9 +64,34 @@ class Validacao
         }
     }
 
-    public function naoPassou()
+    private function unique($tabela, $campo, $dados)
     {
-        $_SESSION['validacoes'] = $this->validacoes;
+        if(strlen($dados) == 0){
+            return;
+        }
+
+        $database = new Database(config('database'));
+
+        $usuario = $database->query(
+            query: "select * from $tabela where $campo = :email",
+            class: Usuario::class,
+            params: [$campo => $dados])
+        ->fetch();
+
+        if(isset($usuario->email)) {
+            $this->validacoes []= 'O e-mail informado já existe.';
+        }
+    }
+
+    public function naoPassou($campoCustomizado = null)
+    {
+        $chave = 'validacoes';
+
+        if ($campoCustomizado) {
+            $chave .= '_' . $campoCustomizado;
+        }
+
+        flash()->push($chave, $this->validacoes);
         return sizeof($this->validacoes) > 0;
     }
 }

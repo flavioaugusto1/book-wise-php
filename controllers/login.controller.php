@@ -1,10 +1,22 @@
 <?php
-$mensagem = $_REQUEST['mensagem'] ?? '';
+require 'Validacao.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
+    $validacao = Validacao::validar(
+        [
+            'email' => ['email', 'required'],
+            'senha' => ['required', 'min:8', 'max:30']
+        ],
+        $_POST
+    );
+
+    if($validacao->naoPassou('login')){
+        header('location: /login');
+        exit();
+    }
 
     $usuario = $database->query(
         query: "select * from usuarios where email = :email and senha = :senha",
@@ -16,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($usuario) {
         $_SESSION['auth'] = $usuario;
-        $_SESSION['mensagem'] = "Seja bem-vindo! $usuario->nome!";
+        flash()->push('mensagem', "Seja bem-vindo! $usuario->nome!");
         header('location: /');
         exit();
     }
 }
 
-view('login', compact('mensagem'));
+view('login');
