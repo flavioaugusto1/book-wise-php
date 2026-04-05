@@ -26,7 +26,6 @@ class Database
         }
 
         $prepare->execute($params);
-
         return $prepare;
     }
 }

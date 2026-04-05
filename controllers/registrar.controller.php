@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $_POST['nome'];
     $email = $_POST['email'];
     $email_confirmacao = $_POST['email_confirmacao'];
-    $senha = $_POST['senha'];
+    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
     $validacao = Validacao::validar(
         [
@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $database->query(
         query: 'insert into usuarios (nome, email, senha) values (:nome, :email, :senha)',
         params: [
-            'nome' => $_POST['nome'],
-            'email' => $_POST['email'],
-            'senha' => $_POST['senha'],
+            'nome' => $nome,
+            'email' => $email,
+            'senha' => $senha,
         ]
     );
 

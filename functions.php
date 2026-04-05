@@ -2,7 +2,7 @@
 
 function view($view, $data = [])
 {
-    foreach($data as $key => $value) {
+    foreach ($data as $key => $value) {
         $$key = $value;
     }
 
@@ -29,16 +29,27 @@ function abort($code)
     die();
 }
 
-function flash(){
+function flash()
+{
     return new Flash;
 }
 
-function config($chave = null) {
+function config($chave = null)
+{
     $config = require 'config.php';
 
-    if(strlen($chave)) {
+    if (strlen($chave)) {
         return $config[$chave];
     }
 
     return $config;
+}
+
+function auth()
+{
+    if (! isset($_SESSION['auth'])) {
+        return null;
+    }
+
+    return $_SESSION['auth'];
 }
