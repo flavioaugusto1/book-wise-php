@@ -14,8 +14,8 @@ class Flash
         }
 
         $valor = $_SESSION["flash_$chave"];
-        unset($_SESSION["flash_$chave"]);
 
+        unset($_SESSION["flash_$chave"]);
         return $valor;
     }
 }

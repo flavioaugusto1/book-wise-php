@@ -33,5 +33,3 @@ $database->query(
 flash()->push('mensagem', 'Avaliação criada com sucesso');
 header("location: /livro?id=$livro_id");
 exit();
-
-dd($_POST);
