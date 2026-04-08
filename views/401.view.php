@@ -1,1 +1,1 @@
-<h1 class="text-lg font-bold mt-10">Você não tem permissão para acessar essa ação.</h1>
+<h1 class="text-lg font-bold mt-10">Você não tem permissão para acessar esse recurso.</h1>

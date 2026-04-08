@@ -1,29 +1,4 @@
-<?php
-$somatoriaNotas = array_reduce($avaliacoes, function ($carry, $a) {
-    return ($carry ?? 0) + $a->nota;
-}) ?? 0;
-
-$mediaAvaliacoes = round($somatoriaNotas / count($avaliacoes));
-
-$notaFinal = str_repeat('⭐️', $mediaAvaliacoes);
-
-?>
-
-<div class="p-2 rounded border-stone-800 border-2 bg-stone-900 mt-14">
-    <div class="flex">
-        <div class="w-1/3">image</div>
-        <div class="space-y-1">
-            <a
-                href="/livro?id=<?= $livro->id ?>"
-                class="font-semibold hover:underline">
-                <?= $livro->title ?>
-            </a>
-            <div class="text-xs italic"><?= $livro->author ?></div>
-            <div class="text-xs italic"><?= $notaFinal ?> (<?= count($avaliacoes) ?> Avaliações)</div>
-        </div>
-    </div>
-    <div class="text-sm mt-2"><?= $livro->description ?></div>
-</div>
+<?php require './partials/_livro.php' ?>
 
 <h2>
     Avaliações
@@ -32,13 +7,13 @@ $notaFinal = str_repeat('⭐️', $mediaAvaliacoes);
     <div class="grid col-span-3 gap-4">
         <?php foreach ($avaliacoes as $avaliacao): ?>
             <div class="border border-stone-700 rounded p4">
-                <div> 
+                <div>
                     <?php $nota = str_repeat("⭐️", $avaliacao->nota); ?>
                     <?= $nota ?>
                 </div>
 
                 <?= $avaliacao->avaliacao ?>
-                
+
                 <div class="text-stone-400"> - <?= $avaliacao->usuario_nome ?></div>
             </div>
         <? endforeach; ?>
